@@ -1,5 +1,7 @@
 import { startApp } from './app'
 import { env } from './config/env'
+import fastify from 'fastify'
+import swagger from './plugins/swagger'
 
 async function startServer() {
     const app = await startApp()

@@ -4,6 +4,8 @@ import { ListUsersController } from '../controller/ListUsersController'
 import { FindUserByIdController } from '../controller/FindUserByIdController'
 import { DeleteUserController } from '../controller/DeleteUserController'
 import { UpdateUserController } from '../controller/UpdateUserController'
+import { z } from 'zod'
+import {createUserSchema,userSchema} from '../schemas/user-schema'
 
 const createUserController = new CreateUserController ()
 const listUsersController = new ListUsersController ()

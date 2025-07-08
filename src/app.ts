@@ -1,9 +1,11 @@
 import Fastify from 'fastify'
 import { AppDataSource } from './data-source'
 import { usersRoutes } from './routes/users-routes'
+import swagger from './plugins/swagger'
+import { validatorCompiler, serializerCompiler, ZodTypeProvider } from 'fastify-type-provider-zod'
 
 export async function startApp(){
-    const app = Fastify()
+    const app = Fastify().withTypeProvider<ZodTypeProvider>()
     await AppDataSource.initialize().then(
         ()=>{
             console.log('Banco de dados inicializado')
@@ -13,7 +15,10 @@ export async function startApp(){
         process.exit(1)
     })
 
-    //Registre as rotas e plugins aqui
+    app.setValidatorCompiler(validatorCompiler)
+    app.setSerializerCompiler(serializerCompiler)
+
+    await app.register(swagger)
     app.register(usersRoutes)
     return app
 }
